@@ -4,6 +4,10 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { ArticlesService } from '../../services/articles/articles.service';
 import { ArticlesController } from '../../controllers/articles/articles.controller';
 import { ArticleSchema } from '../../schemas/article.schema';
+import {
+  ArticleUseCase,
+  ArticleUseCaseSymbol,
+} from '../../domains/usecases/article.usecase';
 
 @Module({
   imports: [
@@ -12,6 +16,9 @@ import { ArticleSchema } from '../../schemas/article.schema';
     ]),
   ],
   controllers: [ArticlesController],
-  providers: [ArticlesService],
+  providers: [
+    ArticlesService,
+    { provide: ArticleUseCaseSymbol, useClass: ArticleUseCase },
+  ],
 })
 export class ArticlesModule {}

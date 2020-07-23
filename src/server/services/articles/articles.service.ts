@@ -1,20 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Article } from '../../schemas/article.schema';
 import { Model } from 'mongoose';
+import { Injectable, Inject } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+
+import { Article } from '../../schemas/article.schema';
+import {
+  ArticleUseCase,
+  ArticleUseCaseSymbol,
+} from '../../domains/usecases/article.usecase';
+import { ArticleEntity } from '../../domains/entities/article.entity';
 
 @Injectable()
 export class ArticlesService {
   constructor(
     @InjectModel('Article') private readonly articleCollection: Model<Article>,
+    @Inject(ArticleUseCaseSymbol)
+    private readonly articleUseCase: ArticleUseCase,
   ) {}
 
-  addNew(article: Article): Promise<Article> {
-    const addedArticle = new this.articleCollection({
-      ...article,
-      date: Date.now(),
-      readTimes: Article.getReadTime(article),
-    });
+  addNew(article: ArticleEntity): Promise<ArticleEntity> {
+    const addedArticle = new this.articleCollection(
+      this.articleUseCase.add(article),
+    );
     return addedArticle.save();
   }
 

@@ -1,13 +1,10 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+
+import { IArticleEntity } from '../domains/entities/article.entity';
 
 @Schema()
-export class Article extends Document {
-  private static WORDS_PER_MINUTE = 200;
-
-  public static getReadTime = (article: Article): number =>
-    Math.ceil(article.body?.split(' ').length / Article.WORDS_PER_MINUTE) | 0;
-
+export class Article extends Document implements IArticleEntity {
   @Prop({ required: true })
   title: string;
 
@@ -15,19 +12,22 @@ export class Article extends Document {
   body: string;
 
   @Prop()
-  comments: [{ username: string; body: string; date: Date }];
+  comments: [{ username: string; body: string; date: string }];
 
   @Prop()
-  date: Date;
+  createDate: string;
 
   @Prop()
-  hidden: boolean;
+  isHidden: boolean;
 
   @Prop()
-  view: number;
+  countOfViews: number;
 
   @Prop()
-  readTimes: number;
+  timesForRead: number;
+
+  @Prop()
+  tags: string[];
 }
 
 export const ArticleSchema = SchemaFactory.createForClass(Article);
