@@ -8,7 +8,7 @@ import { AppService } from '../../services/app/app.service';
 
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/blog'),
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/akpoflash'),
     ArticlesModule,
     UsersModule,
   ],
