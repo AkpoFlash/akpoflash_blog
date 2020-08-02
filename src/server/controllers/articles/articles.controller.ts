@@ -19,9 +19,11 @@ export class ArticlesController {
     return this.articlesService.getAll().catch(err => err);
   }
 
-  @Get(':id')
-  async getArticleById(@Param('id') id: string): Promise<Article> {
-    return this.articlesService.getById(id).catch(err => err);
+  @Get(':urlPath')
+  async getArticleByUrlPath(
+    @Param('urlPath') urlPath: string,
+  ): Promise<Article> {
+    return this.articlesService.getByUrlPath(urlPath).catch(err => err);
   }
 
   @Post()
@@ -29,12 +31,12 @@ export class ArticlesController {
     return this.articlesService.addNew(article).catch(err => err);
   }
 
-  @Put(':id')
+  @Put(':urlPath')
   async updateArticle(
-    @Param('id') id: string,
+    @Param('urlPath') urlPath: string,
     @Body() article: Article,
   ): Promise<Article> {
-    return this.articlesService.update(id, article).catch(err => err);
+    return this.articlesService.update(urlPath, article).catch(err => err);
   }
 
   @Delete(':id')

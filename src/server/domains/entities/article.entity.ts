@@ -1,11 +1,12 @@
 export interface IArticleEntity {
   title: string;
   body: string;
-  createDate: string;
-  isHidden: boolean;
-  countOfViews: number;
-  timesForRead: number;
+  urlPath: string;
   tags: string[];
+  createDate?: string;
+  timesForRead?: number;
+  countOfViews?: number;
+  isHidden?: boolean;
 }
 
 export class ArticleEntity implements IArticleEntity {
@@ -17,12 +18,13 @@ export class ArticleEntity implements IArticleEntity {
     ) | 0;
 
   constructor(
-    public readonly body: string,
-    public readonly countOfViews: number,
-    public readonly createDate: string,
-    public readonly isHidden: boolean,
-    public readonly tags: string[],
-    public readonly timesForRead: number,
     public readonly title: string,
+    public readonly body: string,
+    public readonly urlPath: string,
+    public readonly tags: string[],
+    public readonly createDate?: string,
+    public readonly timesForRead?: number,
+    public readonly countOfViews?: number,
+    public readonly isHidden?: boolean,
   ) {}
 }

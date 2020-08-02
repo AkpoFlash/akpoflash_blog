@@ -24,8 +24,8 @@ export class ArticlesService {
     return addedArticle.save();
   }
 
-  getById(id: string): Promise<Article> {
-    return this.articleCollection.findById(id).exec();
+  getByUrlPath(urlPath: string): Promise<Article> {
+    return this.articleCollection.findOne({ urlPath }).exec();
   }
 
   getAll(): Promise<Article[]> {
@@ -36,7 +36,7 @@ export class ArticlesService {
     this.articleCollection.deleteOne({ _id: id }).exec();
   }
 
-  update(id: string, article: Article): Promise<Article> {
-    return this.articleCollection.updateOne({ _id: id }, article).exec();
+  update(urlPath: string, article: Article): Promise<Article> {
+    return this.articleCollection.updateOne({ urlPath }, article).exec();
   }
 }

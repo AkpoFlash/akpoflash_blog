@@ -11,11 +11,15 @@ export class Article extends Document implements IArticleEntity {
   @Prop()
   body: string;
 
-  @Prop()
-  comments: [{ username: string; body: string; date: string }];
+  @Prop({ required: true })
+  urlPath: string;
 
   @Prop()
   createDate: string;
+
+  // todo create separated entity for comment
+  // @Prop()
+  // comments: [{ username: string; body: string; date: string }];
 
   @Prop()
   isHidden: boolean;
