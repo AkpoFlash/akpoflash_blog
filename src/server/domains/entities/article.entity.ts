@@ -36,7 +36,7 @@ export class ArticleEntity implements IArticleEntity {
     const tagsIterator = article.matchAll(ArticleEntity.TAG_REGEX);
     const tags = [];
     for (let tag of tagsIterator) {
-      tags.push(tag[1]);
+      tags.push(tag[1]?.toLowerCase());
     }
     return tags;
   };
