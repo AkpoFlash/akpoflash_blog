@@ -2,12 +2,13 @@ import { Model } from 'mongoose';
 import { Injectable, Inject } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { Article } from '../../schemas/article.schema';
+import { Article } from 'schemas/article.schema';
 import {
   ArticleUseCase,
   ArticleUseCaseSymbol,
-} from '../../domains/usecases/article.usecase';
-import { ArticleEntity } from '../../domains/entities/article.entity';
+} from 'domains/usecases/article.usecase';
+import { ArticleEntity } from 'domains/entities/article.entity';
+import { FileEntity } from 'domains/entities/file.entity';
 
 @Injectable()
 export class ArticlesService {
@@ -17,7 +18,8 @@ export class ArticlesService {
     private readonly articleUseCase: ArticleUseCase,
   ) {}
 
-  addNew(article: ArticleEntity): Promise<ArticleEntity> {
+  addNew(file: FileEntity): Promise<ArticleEntity> {
+    const article = ArticleEntity.getArticleFromFile(file);
     const addedArticle = new this.articleCollection(
       this.articleUseCase.add(article),
     );

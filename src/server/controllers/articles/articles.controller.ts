@@ -6,7 +6,12 @@ import {
   Delete,
   Param,
   Put,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+
+import { FileEntity } from 'domains/entities/file.entity';
 import { ArticlesService } from '../../services/articles/articles.service';
 import { Article } from '../../schemas/article.schema';
 
@@ -27,8 +32,9 @@ export class ArticlesController {
   }
 
   @Post()
-  async addArticle(@Body() article: Article): Promise<Article> {
-    return this.articlesService.addNew(article).catch(err => err);
+  @UseInterceptors(FileInterceptor('new_article'))
+  uploadFile(@UploadedFile() file: FileEntity): Promise<any> {
+    return this.articlesService.addNew(file).catch(err => err);
   }
 
   @Put(':urlPath')
