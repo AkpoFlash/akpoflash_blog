@@ -30,8 +30,12 @@ export class ArticlesService {
     return this.articleCollection.findOne({ urlPath }).exec();
   }
 
-  getAll(): Promise<Article[]> {
-    return this.articleCollection.find().exec();
+  getAll(tag?: string): Promise<Article[]> {
+    const condition = tag ? { tags: tag } : {};
+    return this.articleCollection
+      .find(condition)
+      .sort({ createDate: -1 })
+      .exec();
   }
 
   delete(id: string) {
