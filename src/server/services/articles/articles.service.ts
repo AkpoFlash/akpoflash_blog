@@ -45,4 +45,11 @@ export class ArticlesService {
   update(urlPath: string, article: Article): Promise<Article> {
     return this.articleCollection.updateOne({ urlPath }, article).exec();
   }
+
+  getAllTags(): Promise<string[]> {
+    return this.articleCollection
+      .find()
+      .distinct('tags')
+      .exec();
+  }
 }

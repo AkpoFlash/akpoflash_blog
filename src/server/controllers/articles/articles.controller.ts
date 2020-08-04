@@ -8,6 +8,7 @@ import {
   Put,
   UseInterceptors,
   UploadedFile,
+  Query,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -20,8 +21,13 @@ export class ArticlesController {
   constructor(private readonly articlesService: ArticlesService) {}
 
   @Get()
-  async getArticles(): Promise<Article[]> {
-    return this.articlesService.getAll().catch(err => err);
+  async getArticles(@Query('tag') tag: string): Promise<Article[]> {
+    return this.articlesService.getAll(tag).catch(err => err);
+  }
+
+  @Get('tags')
+  async getTags(): Promise<string[]> {
+    return this.articlesService.getAllTags().catch(err => err);
   }
 
   @Get(':urlPath')
